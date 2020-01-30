@@ -126,8 +126,12 @@ However, to describe all of the pages for a modern computer's amount of RAM woul
 For example, if only the first and last pages were needed, the table would still need all of the entries inbetween.
 
 This is where multiple level page tables come in where instead of just one table pointing to each page, we may have a table which lists various tables that each list direct pages.
+This allows the operating system to use less memory to describe the page system by not allocating memory for page entries describing things we don't need.
 
 ![Page Directory Entry](https://wiki.osdev.org/images/9/94/Page_dir.png)
+
+Though this comes with a downside: if a program tries to access an address whose page isn't present, a _Page Fault_ occurs.
+This will be important to handle because it happens all of the time as an operating system often uses more virtual memory than it has physically.
 
 Paging may seem a little daunting because it is quite an advanced concept.
 Operating systems need to constantly keep track and update these tables as programs request and free memory and this task is non-trivial.
@@ -151,5 +155,10 @@ There are actually two PICs, a master and a slave, and depending on which sends 
 
 An overview of the table structure is available at _osdev_ https://wiki.osdev.org/IDT#IDT_in_IA-32e_Mode_.2864-bit_IDT.29.
 
+Interrupts are essential to how an operating system works and are necessary for many operations and since we want 64-bit long mode, which requires paging which may cause an exception, we need to set one up.
+
 # 64-bit Long Mode
+Congratulations, now wasn't that easy?
+Here we are using the processor (almost) to its fullest and have access to a _lot_ of RAM (if installed) and large values for numbers.
+
 # Build System
