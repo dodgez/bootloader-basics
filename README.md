@@ -63,12 +63,17 @@ It does this in a series of steps.
 3. Load the Global Descriptor Table (for protecting memory)
 4. Set the PE (Protection Enable) bit in CR0 (Control Register 0)
 
-At this point 16-bit code is still being run so we need to perform a far jump (which will be explained in GDT) to 32-bit code.
+At boot, 16-bit code is still being run so we need to perform a far jump (which will be explained in GDT) to 32-bit code.
 
 # Global Descriptor Table
 The Global Descriptor Table is a way of segmenting memory into chunks that have different attributes like read-only, write-only, priviledge level, size, etc.
 Anymore the GDT is only used to describe the sections of memory for the kernel and the user and protects them using various flags so that user processes cannot overwrite kernel code or data.
 Paging is used for further restriction of access and manipulation of memory and we will come back to this.
+
+A GDT is just a section of memory formatted as shown below, but it is used by the _Memory Management Unit_.
+The purpose of the MMU is to take something called a virtual address, just a memory address, and maps it to a physical location in RAM.
+This translation is important for a kernel to manage memory between applications without applications having to be writting based in different locations.
+E.g. a program may expect important objects at a certain address and if the kernel decided to locate this program in different locations, the MMU makes it seem like these objects are at the expected address even if it is not the same location at all in physical memory.
 
 ![GDT Entry](https://wiki.osdev.org/images/f/f3/GDT_Entry.png)
 
@@ -81,10 +86,10 @@ Any read or write of memory is going to go through this table using things calle
 - ES - Extra Segment (usually set to the same as data)
 - FS, GS - General Purpose Segments (usually set to the same as data)
 
-Remember when we wanted to go from 16-bit Real Mode to 32-bit Protected Mode we needed to load a GDT.
+Remember, when we wanted to go from 16-bit Real Mode to 32-bit Protected Mode we needed to load a GDT.
 But in order to actually execute any 32-bit code we need to setup the GDT structure in memory but also load the correct values in the segment registers.
-It is straight forward to do this for DS, ES, FS, GS, SS, but in order to put the right value into CS, we need to do a _far jump_.
-A _far jump_ is just where you specify the location in memory you will start executing code and the code segment as well because potentially we may jump between code segments.
+It is straight forward to do this for DS, ES, FS, GS, SS, but in order to put the right value into CS, we need to do a _far jump_ because CS cannot be changed without doing a far jump.
+A _far jump_ is just where you specify the location in memory you will start executing code and the code segment as well because potentially we may jump between code segments like from user to kernel space.
 
 # A20 Line
 The A20 Line is the 21st bit of any memory address.
