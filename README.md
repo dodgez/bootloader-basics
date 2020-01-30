@@ -36,3 +36,6 @@ A byte is just 8 bits.
 Thus if we have a 16-bit, 32-bit, or 64-bit computer, numbers (and data) are stored in 2 bytes, 4 bytes, and 8 bytes respectively.
 Also, the highest number for each type is 65536, ~4.9 billion, and a _very_ large number (2^64) for 64-bit.
 For reference, 2^64 is approximately (2^3)^21 which has approximately 21 decimal places.
+
+![A Lot of Bits](https://raw.githubusercontent.com/sumitc91/data/master/askgif-blog/e00afba1-4221-4b3d-b9af-3a69ac35f84d_bits-bytes.jpg)
+
