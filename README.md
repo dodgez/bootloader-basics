@@ -26,6 +26,8 @@ Intel has remained very backwards compatible, so modern processors can still a l
 
 The term _x86_64_ refers to the 64-bit version of the x86 instruction set (which is 32-bit).
 
+![Intel 8086 Microprocessor](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCca0gYFekjrqSLxhClefgyRtfQzW1upD53xNkrhjA7qLViJ1l&s)
+
 # How Many Bits?
 The term _bits_ and _bytes_ are used a lot in low level programming because the computer treats numbers as a series of bits, which are a placeholder for a 1 or a 0.
 This means if a computer is 8-bit, it uses 8 placeholders for a 1 or 0 to represent numbers, so the highest possible number is 2^8 = 256.
