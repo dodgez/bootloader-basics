@@ -23,7 +23,7 @@ The bootloader is one of the most challenging yet most rewarding pieces of an op
 # What is x86 and x86_64
 The term _x86_ refers to a series of instruction set architectures developed by Intel.
 Here, we use the phrase _instruction set architecture_ to mean set of instructions and their consequences.
-Intel has remained very backwards compatible, so modern processors can still a lot of the same instructions as the Intel 8086 microprocessor.
+Intel has remained very backwards compatible, so modern processors still have a lot of the same instructions as the Intel 8086 microprocessor.
 
 The term _x86_64_ refers to the 64-bit version of the x86 instruction set (which is 32-bit).
 
@@ -50,8 +50,8 @@ This mode is the starting point for any bootloader so in order to boot a modern 
 One of the major benefits of this mode is the BIOS, standing for Basic Input/Output System and which is firmware built into the motherboard controlling the process of booting up and more, provides many useful utilities.
 For example, by calling an interrupt, `int 0x10`, you can print characters out to the screen.
 We will talk more about interrupts later, but you can think of them as a generic way to call a system-provided function.
-So here, we are calling a predefined function that the BIOS provides to print a character out to the screen.
-Later, we will use write the handling code for exception interrupts like dividing by zero.
+In this example, we are calling a predefined function that the BIOS provides to print a character out to the screen.
+Later, we will write the handling code for exception interrupts like dividing by zero.
 
 Fun fact: MS-DOS was 16-bit real mode all the way up to the time of Windows 9x!
 
