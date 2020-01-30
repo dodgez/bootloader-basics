@@ -6,8 +6,8 @@
 - Global Descriptor Table
 - A20 Line
 - 32-bit Protected Mode
-- Excep-Interrupts-tions (Interrupt Descriptor Table)
 - Paging
+- Excep-Interrupts-tions (Interrupt Descriptor Table)
 - 64-bit Long Mode
 - Build System
 
@@ -91,13 +91,17 @@ The A20 Line is the 21st bit of any memory address.
 When the Intel 286 was created, it allowed up to 16 MB of memory instead of the 1 MB of the 8086, but the 8086 had an odd feature.
 The 8086 had address lines A0 through A19 that would go up to 1 MB but the segmented memory model allowed for above 1 MB, any address above 1 MB would wrap around to zero.
 
-For the 286, they created address line A21, which is disabled by default to enable backwards compatibility with the 8086, but by enabling it, more than 1 MB could be addressed.
+For the i286, they created address line A21, which is disabled by default to enable backwards compatibility with the 8086, but by enabling it, more than 1 MB could be addressed.
 
 Fun fact: the keyboard controller had a spare pin with which they routed A20 through so the keyboard controller needed to be used to activate it.
 
 ![A20 Line](https://i.stack.imgur.com/OcwGJ.png)
 
-# Excep-Interrupts-tions (Interrupt Descriptor Table)
 # Paging
+![Page Table Entry](https://wiki.osdev.org/images/9/94/Page_dir.png)
+
+![Page Table Entry](https://wiki.osdev.org/images/9/9b/Page_table.png)
+
+# Excep-Interrupts-tions (Interrupt Descriptor Table)
 # 64-bit Long Mode
 # Build System
