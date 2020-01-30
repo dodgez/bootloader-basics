@@ -70,6 +70,8 @@ The Global Descriptor Table is a way of segmenting memory into chunks that have 
 Anymore the GDT is only used to describe the sections of memory for the kernel and the user and protects them using various flags so that user processes cannot overwrite kernel code or data.
 Paging is used for further restriction of access and manipulation of memory and we will come back to this.
 
+_One important note is 64-bit long mode deprecates a lot of GDT functionality and pretty much only uses it for determining code running in kernel or user space (has limited or full access to memory and such)._
+
 A GDT is just a section of memory formatted as shown below, but it is used by the _Memory Management Unit_.
 The purpose of the MMU is to take something called a virtual address, just a memory address, and maps it to a physical location in RAM.
 This translation is important for a kernel to manage memory between applications without applications having to be writting based in different locations.
@@ -103,9 +105,35 @@ Fun fact: the keyboard controller had a spare pin with which they routed A20 thr
 ![A20 Line](https://i.stack.imgur.com/OcwGJ.png)
 
 # Paging
-![Page Table Entry](https://wiki.osdev.org/images/9/94/Page_dir.png)
+Paging is the modern replacement of Segmentation.
+One of the main benefits of using paging versus segmentation is a particular problem of fragmentation.
+Because the GDT described regions of various lengths, situations like this picture happen.
+![Segment Fragmentation](https://os.phil-opp.com/paging-introduction/segmentation-fragmentation.svg)
+
+Paging fixes this issue by using small fixed-size pages of data to get the following.
+![Paging Memory Layout](https://os.phil-opp.com/paging-introduction/paging-fragmentation.svg)
+
+We still have another type of fragmentation brought on by the fixed-size property.
+This fragmentation isn't nearly as "bad" but it occurs when a program only needs to take a fraction of a page or a non-integer multiple of pages and so the rest of the page data is unused.
+However, the amount of wasted space is not as bad compared to the performance issues of relocating chunks to fix segment fragmentation.
+
+The way paging is setup is through a page table.
+A page table is a list of addresses (one for each page) and the associated flags like permissions that go with it.
 
 ![Page Table Entry](https://wiki.osdev.org/images/9/9b/Page_table.png)
+
+However, to describe all of the pages for a modern computer's amount of RAM would be wasteful.
+For example, if only the first and last pages were needed, the table would still need all of the entries inbetween.
+
+This is where multiple level page tables come in where instead of just one table pointing to each page, we may have a table which lists various tables that each list direct pages.
+
+![Page Directory Entry](https://wiki.osdev.org/images/9/94/Page_dir.png)
+
+Paging may seem a little daunting because it is quite an advanced concept.
+Operating systems need to constantly keep track and update these tables as programs request and free memory and this task is non-trivial.
+
+The important part is Paging is _required_ in order to enter 64-bit long mode.
+One could theoretically use 32-bit protected mode with just segmentation (though it would be awfully hard and run into issues discussed above), but in 64-bit long mode, the GDT purely describes kernel and user space segments.
 
 # Excep-Interrupts-tions (Interrupt Descriptor Table)
 # 64-bit Long Mode
