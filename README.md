@@ -160,5 +160,25 @@ Interrupts are essential to how an operating system works and are necessary for 
 # 64-bit Long Mode
 Congratulations, now wasn't that easy?
 Here we are using the processor (almost) to its fullest and have access to a _lot_ of RAM (if installed) and large values for numbers.
+This is the stage where the actual operating system takes over.
 
 # Build System
+In order to build the operating system, we need to do it in multiple steps (that depend on the bootloader and more).
+In my examples, I use a bootloader to do most of this work for me called GRUB.
+GRUB implements a standardized bootloading approach which leaves the computer in a predictable state when the kernel is executed.
+It does the hard work of switching to 32-bit protected mode, but unfortunately it doesn't go any further.
+
+In order to use it, it requires the operating system to be an `elf` file (Executable and Linking Format).
+This means I need to take the code and compile it using `nasm` for the assembly and `x86_64-elf-gcc` for the C code.
+This `x86_64-elf-gcc` is a special version of `gcc` (GNU C Compiler) meant to output `elf` files for the `x86_64` instruction set architecture.
+This is important because depending on the processor and operating system that the compiler is running on, the compiler will try to output code to run on that computer.
+However this is not always compatible with `x86_64` and `elf` (like `x86` or `arm` or Windows) so we use a special version to force this compatibility.
+
+If the computer that is compiling the code is x86_64 and linux, it should be able to just use regular `gcc`.
+
+`grub-pc-bin` is a linux package which has executables to take this `elf` file with configuration options and output a raw binary format that can be written to a cdrom for example.
+
+`xorriso` is a package meant to take raw binary formats and output an iso file (essentially what a cdrom would have) so that I can run the operating system on `Qemu`.
+
+`Qemu` is a complete computer _emulator_.
+I use this for quick testing of the OS.
