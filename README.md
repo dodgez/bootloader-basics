@@ -3,11 +3,12 @@
 - What is x86 and x86_64?
 - How Many Bits?
 - 16-bit Real Mode
+- A20 Line
 - Global Descriptor Table
 - 32-bit Protected Mode
+- Excep-Interrupts-tions (Interrupt Descriptor Table)
 - Paging
 - 64-bit Long Mode
-- Excep-Interrupts-tions (Interrupt Descriptor Table)
 - Build System
 
 # What is a Bootloader?
@@ -63,3 +64,10 @@ It does this in a series of steps.
 4. Set the PE (Protection Enable) bit in CR0 (Control Register 0)
 
 At this point 16-bit code is still being run so we need to perform a far jump (which will be explained in GDT) to 32-bit code.
+
+# A20 Line
+# Global Descriptor Table
+# Excep-Interrupts-tions (Interrupt Descriptor Table)
+# Paging
+# 64-bit Long Mode
+# Build System
