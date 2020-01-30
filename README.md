@@ -39,3 +39,27 @@ For reference, 2^64 is approximately (2^3)^21 which has approximately 21 decimal
 
 ![A Lot of Bits](https://raw.githubusercontent.com/sumitc91/data/master/askgif-blog/e00afba1-4221-4b3d-b9af-3a69ac35f84d_bits-bytes.jpg)
 
+# 16-bit Real Mode
+When *all* x86 processors (including any from the present day) start up, they are in what is called _16-bit Real Mode_.
+This means that numbers can only be stored in 2 bytes, so 65536 is the maximum number.
+This also means that less than 1 MB of RAM can be used!
+
+This mode is the starting point for any bootloader so in order to boot a modern operating system (if you are using BIOS and not UEFI), the very first piece of code that gets run needs to be running in 16-bit.
+
+One of the major benefits of this mode is the BIOS, standing for Basic Input/Output System and which is firmware built into the motherboard controlling the process of booting up and more, provides many useful utilities.
+For example, by calling an interrupt, `int 0x10`, you can print characters out to the screen.
+We will talk more about interrupts later, but you can think of them as a generic way to call a system-provided function.
+So here, we are calling a predefined function that the BIOS provides to print a character out to the screen.
+Later, we will use write the handling code for exception interrupts like dividing by zero.
+
+Fun fact: MS-DOS was 16-bit real mode all the way up to the time of Windows 9x!
+
+As mentioned above, every bootloader starts in this mode and its job is to get out of real mode and into 32-bit protected mode.
+It does this in a series of steps.
+
+1. Disable interrupts
+2. Enable the A20 Line
+3. Load the Global Descriptor Table
+4. Set the PE (Protection Enable) bit in CR0 (Control Register 0)
+
+At this point 16-bit code is still being run so we need to perform a far jump (which will be explained in GDT) to 32-bit code.
