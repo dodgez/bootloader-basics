@@ -136,5 +136,20 @@ The important part is Paging is _required_ in order to enter 64-bit long mode.
 One could theoretically use 32-bit protected mode with just segmentation (though it would be awfully hard and run into issues discussed above), but in 64-bit long mode, the GDT purely describes kernel and user space segments.
 
 # Excep-Interrupts-tions (Interrupt Descriptor Table)
+Interrupts are signals to the CPU to halt what it is doing and deal with something else.
+There are multiple types of interrupts:
+- Exceptions - things like dividing by zero or a page being accessed isn't mapped into memory
+- Hardware Interrupts or Interrupt Requests - things like keyboard input, timers, and devices needing attention
+- Software Interrupts - kernel code or software code triggers an interrupt (like user code calling kernel code)
+
+The main point of interrupts is that the CPU stops _everything_ in order to handle whatever is triggering the interrupt.
+Funny enough, you can even have interrupts triggering while handling an interrupt! (Hence the title)
+
+Interrupts are setup by creating a table pointing interrupt numbers and types to specific code that should run.
+The hardware in charge of interrupts is the _Programmable Interrupt Controller_.
+There are actually two PICs, a master and a slave, and depending on which sends the interrupt (specific interrupts go through one or the other), we need to send an acknowledgement that we got the interrupt and the PIC should continue sending interrupts.
+
+An overview of the table structure is available at _osdev_ https://wiki.osdev.org/IDT#IDT_in_IA-32e_Mode_.2864-bit_IDT.29.
+
 # 64-bit Long Mode
 # Build System
