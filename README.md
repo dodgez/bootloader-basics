@@ -18,7 +18,7 @@ A bootloader is a piece of code which is responsible for loading the kernel from
 
 The bootloader is one of the most challenging yet most rewarding pieces of an operating system because there are no protections and setting up the system is *extremely volatile* with little to *no helper routines*.
 
-![Broken Hard Drive](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7Pffjah6OpuHnde73ZCVVt1uRnDvzW6I28Tb7YR6GU5Oe4_wD7A&s)
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7Pffjah6OpuHnde73ZCVVt1uRnDvzW6I28Tb7YR6GU5Oe4_wD7A&s" width="600" height="600">
 
 # What is x86 and x86_64
 The term _x86_ refers to a series of instruction set architectures developed by Intel.
@@ -27,7 +27,7 @@ Intel has remained very backwards compatible, so modern processors still have a 
 
 The term _x86_64_ refers to the 64-bit version of the x86 instruction set (which is 32-bit).
 
-![Intel 8086 Microprocessor](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCca0gYFekjrqSLxhClefgyRtfQzW1upD53xNkrhjA7qLViJ1l&s)
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCca0gYFekjrqSLxhClefgyRtfQzW1upD53xNkrhjA7qLViJ1l&s" width="600" height="600">
 
 # How Many Bits?
 The term _bits_ and _bytes_ are used a lot in low level programming because the computer treats numbers as a series of bits, which are a placeholder for a 1 or a 0.
@@ -38,12 +38,14 @@ Thus if we have a 16-bit, 32-bit, or 64-bit computer, numbers (and data) are sto
 Also, the highest number for each type is 65536, ~4.9 billion, and a _very_ large number (2^64) for 64-bit.
 For reference, 2^64 is approximately (2^3)^21 which has approximately 21 decimal places.
 
-![A Lot of Bits](https://raw.githubusercontent.com/sumitc91/data/master/askgif-blog/e00afba1-4221-4b3d-b9af-3a69ac35f84d_bits-bytes.jpg)
+<img src="https://raw.githubusercontent.com/sumitc91/data/master/askgif-blog/e00afba1-4221-4b3d-b9af-3a69ac35f84d_bits-bytes.jpg" width="600" height="600">
 
 # 16-bit Real Mode
 When *all* x86 processors (including any from the present day) start up, they are in what is called _16-bit Real Mode_.
 This means that numbers can only be stored in 2 bytes, so 65536 is the maximum number.
 This also means that less than 1 MB of RAM can be used!
+
+<img src="https://jerry153fish.github.io/assets/img/register.png" width="600" height="600">
 
 This mode is the starting point for any bootloader so in order to boot a modern operating system (if you are using BIOS and not UEFI), the very first piece of code that gets run needs to be running in 16-bit.
 
@@ -77,7 +79,7 @@ The purpose of the MMU is to take something called a virtual address, just a mem
 This translation is important for a kernel to manage memory between applications without applications having to be writting based in different locations.
 E.g. a program may expect important objects at a certain address and if the kernel decided to locate this program in different locations, the MMU makes it seem like these objects are at the expected address even if it is not the same location at all in physical memory.
 
-![GDT Entry](https://wiki.osdev.org/images/f/f3/GDT_Entry.png)
+<img src="https://wiki.osdev.org/images/f/f3/GDT_Entry.png" width="600" height="600">
 
 A reference for this table is https://wiki.osdev.org/Global_descriptor_table.
 
@@ -102,16 +104,18 @@ For the i286, they created address line A21, which is disabled by default to ena
 
 Fun fact: the keyboard controller had a spare pin with which they routed A20 through so the keyboard controller needed to be used to activate it.
 
-![A20 Line](https://i.stack.imgur.com/OcwGJ.png)
+<img src="https://i.stack.imgur.com/OcwGJ.png" width="600" height="600">
 
 # Paging
 Paging is the modern replacement of Segmentation.
 One of the main benefits of using paging versus segmentation is a particular problem of fragmentation.
 Because the GDT described regions of various lengths, situations like this picture happen.
-![Segment Fragmentation](https://os.phil-opp.com/paging-introduction/segmentation-fragmentation.svg)
+
+<img src="https://os.phil-opp.com/paging-introduction/segmentation-fragmentation.svg" width="600" height="600">
 
 Paging fixes this issue by using small fixed-size pages of data to get the following.
-![Paging Memory Layout](https://os.phil-opp.com/paging-introduction/paging-fragmentation.svg)
+
+<img src="https://os.phil-opp.com/paging-introduction/paging-fragmentation.svg" width="600" height="600">
 
 We still have another type of fragmentation brought on by the fixed-size property.
 This fragmentation isn't nearly as "bad" but it occurs when a program only needs to take a fraction of a page or a non-integer multiple of pages and so the rest of the page data is unused.
@@ -120,7 +124,7 @@ However, the amount of wasted space is not as bad compared to the performance is
 The way paging is setup is through a page table.
 A page table is a list of addresses (one for each page) and the associated flags like permissions that go with it.
 
-![Page Table Entry](https://wiki.osdev.org/images/9/9b/Page_table.png)
+<img src="https://wiki.osdev.org/images/9/9b/Page_table.png" width="600" height="600">
 
 However, to describe all of the pages for a modern computer's amount of RAM would be wasteful.
 For example, if only the first and last pages were needed, the table would still need all of the entries inbetween.
@@ -128,7 +132,7 @@ For example, if only the first and last pages were needed, the table would still
 This is where multiple level page tables come in where instead of just one table pointing to each page, we may have a table which lists various tables that each list direct pages.
 This allows the operating system to use less memory to describe the page system by not allocating memory for page entries describing things we don't need.
 
-![Page Directory Entry](https://wiki.osdev.org/images/9/94/Page_dir.png)
+<img src="https://wiki.osdev.org/images/9/94/Page_dir.png" width="600" height="600">
 
 Though this comes with a downside: if a program tries to access an address whose page isn't present, a _Page Fault_ occurs.
 This will be important to handle because it happens all of the time as an operating system often uses more virtual memory than it has physically.
